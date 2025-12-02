@@ -89,6 +89,7 @@ export async function olostepAnswerStep(
   "use step";
   return withStepLogging(input, () => getAnswer(input));
 }
+olostepAnswerStep.maxRetries = 0;
 
 // Required for codegen auto-generation
 export const _integrationType = "olostep";

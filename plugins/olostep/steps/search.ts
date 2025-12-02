@@ -104,6 +104,7 @@ export async function olostepSearchStep(
   "use step";
   return withStepLogging(input, () => search(input));
 }
+olostepSearchStep.maxRetries = 0;
 
 // Required for codegen auto-generation
 export const _integrationType = "olostep";
