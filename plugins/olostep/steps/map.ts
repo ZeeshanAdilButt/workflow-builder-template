@@ -6,7 +6,7 @@ import { getErrorMessage } from "@/lib/utils";
 
 type MapResult = {
   urls: string[];
-  totalUrls: number;
+  count: number;
 };
 
 export type OlostepMapInput = StepInput & {
@@ -53,10 +53,11 @@ async function mapUrls(input: OlostepMapInput): Promise<MapResult> {
     const result = await response.json();
 
     const urls = result.urls || result.links || [];
+    const limitedUrls = urls.slice(0, input.limit || 100);
 
     return {
-      urls: urls.slice(0, input.limit || 100),
-      totalUrls: urls.length,
+      urls: limitedUrls,
+      count: limitedUrls.length,
     };
   } catch (error) {
     throw new Error(`Failed to map URLs: ${getErrorMessage(error)}`);
@@ -74,5 +75,5 @@ export async function olostepMapStep(
   return withStepLogging(input, () => mapUrls(input));
 }
 
-
-
+// Required for codegen auto-generation
+export const _integrationType = "olostep";

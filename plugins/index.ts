@@ -12,24 +12,36 @@
  * To remove an integration:
  * 1. Delete the plugin directory
  * 2. Run: pnpm discover-plugins (or it runs automatically on build)
- *
- * Discovered plugins: ai-gateway, firecrawl, linear, olostep, resend, slack, v0
  */
 
 import "./ai-gateway";
+import "./blob";
+import "./fal";
 import "./firecrawl";
+import "./github";
 import "./linear";
 import "./olostep";
+import "./perplexity";
 import "./resend";
 import "./slack";
+import "./stripe";
+import "./superagent";
 import "./v0";
 
-export type { IntegrationPlugin, PluginAction, ActionWithFullId } from "./registry";
+export type {
+  ActionConfigField,
+  ActionConfigFieldBase,
+  ActionConfigFieldGroup,
+  ActionWithFullId,
+  IntegrationPlugin,
+  PluginAction,
+} from "./registry";
 
 // Export the registry utilities
 export {
   computeActionId,
   findActionById,
+  flattenConfigFields,
   generateAIActionPrompts,
   getActionsByCategory,
   getAllActions,
@@ -43,6 +55,7 @@ export {
   getIntegrationTypes,
   getPluginEnvVars,
   getSortedIntegrationTypes,
+  isFieldGroup,
   parseActionId,
   registerIntegration,
 } from "./registry";

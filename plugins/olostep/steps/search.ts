@@ -13,7 +13,7 @@ type SearchResultItem = {
 
 type SearchResult = {
   results: SearchResultItem[];
-  totalResults?: number;
+  totalResults: number;
 };
 
 export type OlostepSearchInput = StepInput & {
@@ -77,12 +77,13 @@ async function search(input: OlostepSearchInput): Promise<SearchResult> {
           snippet?: string;
           markdown?: string;
         }) => ({
-          url: item.url || item.link,
+          url: item.url || item.link || "",
           title: item.title,
           description: item.description || item.snippet,
           markdown: item.markdown,
         })
-      );
+      )
+      .filter((item: SearchResultItem) => item.url);
 
     return {
       results,
@@ -104,7 +105,5 @@ export async function olostepSearchStep(
   return withStepLogging(input, () => search(input));
 }
 
-
-
-
-
+// Required for codegen auto-generation
+export const _integrationType = "olostep";

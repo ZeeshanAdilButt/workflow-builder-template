@@ -1,9 +1,5 @@
 import type { IntegrationPlugin } from "../registry";
 import { registerIntegration } from "../registry";
-import { answerCodegenTemplate } from "./codegen/answer";
-import { mapCodegenTemplate } from "./codegen/map";
-import { scrapeCodegenTemplate } from "./codegen/scrape";
-import { searchCodegenTemplate } from "./codegen/search";
 import { OlostepIcon } from "./icon";
 
 const olostepPlugin: IntegrationPlugin = {
@@ -36,8 +32,6 @@ const olostepPlugin: IntegrationPlugin = {
     },
   },
 
-  dependencies: {},
-
   actions: [
     {
       slug: "scrape",
@@ -46,6 +40,11 @@ const olostepPlugin: IntegrationPlugin = {
       category: "Olostep",
       stepFunction: "olostepScrapeStep",
       stepImportPath: "scrape",
+      outputFields: [
+        { field: "markdown", description: "Scraped content as markdown" },
+        { field: "html", description: "Raw HTML content" },
+        { field: "metadata", description: "Page metadata object" },
+      ],
       configFields: [
         {
           key: "url",
@@ -63,7 +62,6 @@ const olostepPlugin: IntegrationPlugin = {
           example: ".main-content",
         },
       ],
-      codegenTemplate: scrapeCodegenTemplate,
     },
     {
       slug: "search",
@@ -72,6 +70,10 @@ const olostepPlugin: IntegrationPlugin = {
       category: "Olostep",
       stepFunction: "olostepSearchStep",
       stepImportPath: "search",
+      outputFields: [
+        { field: "results", description: "Array of search results" },
+        { field: "totalResults", description: "Total number of results" },
+      ],
       configFields: [
         {
           key: "query",
@@ -97,7 +99,6 @@ const olostepPlugin: IntegrationPlugin = {
           example: "us",
         },
       ],
-      codegenTemplate: searchCodegenTemplate,
     },
     {
       slug: "map",
@@ -106,6 +107,10 @@ const olostepPlugin: IntegrationPlugin = {
       category: "Olostep",
       stepFunction: "olostepMapStep",
       stepImportPath: "map",
+      outputFields: [
+        { field: "urls", description: "Array of discovered URLs" },
+        { field: "count", description: "Number of URLs found" },
+      ],
       configFields: [
         {
           key: "url",
@@ -124,7 +129,6 @@ const olostepPlugin: IntegrationPlugin = {
           example: "100",
         },
       ],
-      codegenTemplate: mapCodegenTemplate,
     },
     {
       slug: "answer",
@@ -133,6 +137,10 @@ const olostepPlugin: IntegrationPlugin = {
       category: "Olostep",
       stepFunction: "olostepAnswerStep",
       stepImportPath: "answer",
+      outputFields: [
+        { field: "answer", description: "AI-generated answer" },
+        { field: "sources", description: "Array of source URLs used" },
+      ],
       configFields: [
         {
           key: "question",
@@ -150,7 +158,6 @@ const olostepPlugin: IntegrationPlugin = {
           example: "product features comparison 2024",
         },
       ],
-      codegenTemplate: answerCodegenTemplate,
     },
   ],
 };

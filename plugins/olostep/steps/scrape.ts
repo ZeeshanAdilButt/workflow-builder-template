@@ -77,7 +77,5 @@ export async function olostepScrapeStep(
   return withStepLogging(input, () => scrape(input));
 }
 
-
-
-
-
+// Required for codegen auto-generation
+export const _integrationType = "olostep";

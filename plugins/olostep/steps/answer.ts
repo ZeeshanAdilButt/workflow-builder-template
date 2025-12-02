@@ -67,12 +67,12 @@ async function getAnswer(input: OlostepAnswerInput): Promise<AnswerResult> {
 
     return {
       answer: result.answer || result.response || "",
-      sources: (result.sources || result.references || []).map(
-        (source: { url?: string; link?: string; title?: string }) => ({
-          url: source.url || source.link,
+      sources: (result.sources || result.references || [])
+        .map((source: { url?: string; link?: string; title?: string }) => ({
+          url: source.url || source.link || "",
           title: source.title,
-        })
-      ),
+        }))
+        .filter((source: { url: string; title?: string }) => source.url),
     };
   } catch (error) {
     throw new Error(`Failed to get answer: ${getErrorMessage(error)}`);
@@ -90,5 +90,5 @@ export async function olostepAnswerStep(
   return withStepLogging(input, () => getAnswer(input));
 }
 
-
-
+// Required for codegen auto-generation
+export const _integrationType = "olostep";
